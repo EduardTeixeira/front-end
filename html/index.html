@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Lista de Produtos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../js/script.js"></script>
+</head>
+
+<body>
+
+    <h2>Produtos</h2>
+
+    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Pesquisar por nome...">
+
+    <table id="myTable">
+        <tr>
+            <th onclick="sortTable(0)">Nome</th>
+            <th onclick="sortTable(1)">Preço</th>
+            <th onclick="sortTable(2)">Imagem</th>
+        </tr>
+        <tr>
+            <td>Cadeira para Auto</td>
+            <td>1149</td>
+            <td>http://challenge-api.luizalabs.com/images/6a512e6c-6627-d286-5d18-583558359ab6.jpg</td>
+        </tr>
+        <tr>
+            <td>Celular</td>
+            <td>1999</td>
+            <td>http://challenge-api.luizalabs.com/images/6a512e6c-6627-d286-5d18-583558359ab6.jpg</td>
+        </tr>
+        <tr>
+            <td>Telefone</td>
+            <td>67</td>
+            <td>http://challenge-api.luizalabs.com/images/6a512e6c-6627-d286-5d18-583558359ab6.jpg</td>
+        </tr>
+        <tr>
+            <td>Computador</td>
+            <td>58</td>
+            <td>http://challenge-api.luizalabs.com/images/6a512e6c-6627-d286-5d18-583558359ab6.jpg</td>
+        </tr>
+    </table>
+
+</body>
+
+</html>
