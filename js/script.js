@@ -1,76 +1,47 @@
 function onInit() {
 
-    var request = $.ajax({
-        type: 'GET',
-        //data: "text=" + $(this).val(),
-        url: "http://challenge-api.luizalabs.com/api/product/?page=1",
-        success: function (data) {
-            console.log("OK")
-            console.log(data);
+    document.getElementById("content").style.display = "none";
+
+    $.ajax({
+        //url: "http://localhost:8080/v1/product/list",
+        url: "https://cors-anywhere.herokuapp.com/http://challenge-api.luizalabs.com/api/product/?page=1",
+        method: "GET",
+        dataType: "JSON",
+        useDefaultXhrHeader: false,
+        headers: {
+            'Content-Type': 'application/json',
+            'charset': 'utf-8',
         },
-        error: function (jqXHR, textStatus, errorThrown) {
-            console.log("ERROR2222")
-            console.log(jqXHR, textStatus, errorThrown);
-            request.abort();
+        success: function (data) {
+
+            var listProducts = data.products;
+
+            for (i = 0; i < listProducts.length; i++) {
+                document.getElementById("myTable").innerHTML += `
+                <tr>
+                    <td>` + listProducts[i].title + `</td>
+                    <td>` + listProducts[i].price + `</td>
+                    <td>
+                        <img src="` + listProducts[i].image + `">
+                    </td>
+                </tr>`;
+            }
+        },
+        error: function (error) {
+            console.log("ERROR");
+            console.log(error);
+            document.getElementById("myTable").innerHTML += `
+            <tr>
+                <td>Erro ao buscar produtos, recarregue a página e tente novamente.</td>
+                <td></td>
+                <td></td>
+            </tr>`;
+        },
+        complete: function () {
+            document.getElementById("content").style.display = "block";
+            document.getElementById("loading").style.display = "none";
         }
     });
-
-    /*
-    $.getJSON("http://challenge-api.luizalabs.com/api/product/?page=1",
-        function (data) {
-            console.log(data)
-            doSomethingWith(data);
-        });
-        **/
-
-
-    /*
-var xhttp = new XMLHttpRequest();
-
-xhttp.onreadystatechange = function () {
-    if (this.readyState == 4 && this.status == 200) {
-        console.log("OK DEU CERTO @@@")
-        //document.getElementById("demo").innerHTML = this.responseText;
-        console.log(this.responseText);
-
-        $.ajax({
-            //url: "http://localhost:8080/v1/product/list",
-            url: "http://challenge-api.luizalabs.com/api/product/?page=1",
-            method: "GET",
-            dataType: "JSON",
-            headers: {
-                'Content-Type': 'application/json',
-                'charset': 'utf-8',
-            },
-            success: function (data) {
-
-                console.log('data...')
-                console.log(data)
-
-                for (i = 0; i < data.length; i++) {
-                    document.getElementById("myTable").innerHTML += `
-                    <tr>
-                        <td>` + data[i].title + `</td>
-                        <td>` + data[i].price + `</td>
-                        <td>
-                            <img src="` + data[i].image + `">
-                        </td>
-                    </tr>`;
-                }
-            },
-            error: function (error) {
-                console.log("ERROR")
-                console.log(error);
-            }
-        });
-
-    } else{
-        console.log("DEU ERRO.")
-    }
-};
-xhttp.open("GET", "http://challenge-api.luizalabs.com/api/product/?page=1", true);
-xhttp.send();
-*/
 }
 
 function sortTable(n) {

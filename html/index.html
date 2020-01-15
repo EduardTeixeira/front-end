@@ -11,47 +11,27 @@
 
 <body onload="onInit()">
 
-    <h2>Produtos</h2>
+    <div id="loading" class="center">
+        <div class="loader">
+        </div>
+        <h2>Carregando...</h2>
+    </div>
 
-    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Pesquisar por nome...">
+    <div id="content">
 
-    <table id="myTable">
-        <tr>
-            <th onclick="sortTable(0)">Nome</th>
-            <th onclick="sortTablePrice(1)">Preço</th>
-            <th onclick="sortTable(2)">Imagem</th>
-        </tr>
-        <!--
-        <tr>
-            <td>Cadeira para Auto</td>
-            <td>1149</td>
-            <td>
-                <img src="http://challenge-api.luizalabs.com/images/6a512e6c-6627-d286-5d18-583558359ab6.jpg">
-            </td>
-        </tr>
-        <tr>
-            <td>Celular</td>
-            <td>1999</td>
-            <td>
-                <img src="http://challenge-api.luizalabs.com/images/6a512e6c-6627-d286-5d18-583558359ab6.jpg">
-            </td>
-        </tr>
-        <tr>
-            <td>Telefone</td>
-            <td>67</td>
-            <td>
-                <img src="http://challenge-api.luizalabs.com/images/6a512e6c-6627-d286-5d18-583558359ab6.jpg">
-            </td>
-        </tr>
-        <tr>
-            <td>Computador</td>
-            <td>58</td>
-            <td>
-                <img src="http://challenge-api.luizalabs.com/images/6a512e6c-6627-d286-5d18-583558359ab6.jpg">
-            </td>
-        </tr>
-        -->
-    </table>
+        <h2>Lista de Produtos</h2>
+
+        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Pesquisar por nome...">
+
+        <table id="myTable">
+            <tr>
+                <th onclick="sortTable(0)">Nome</th>
+                <th onclick="sortTablePrice(1)">Preço</th>
+                <th onclick="sortTable(2)">Imagem</th>
+            </tr>
+        </table>
+
+    </div>
 
 </body>
 
