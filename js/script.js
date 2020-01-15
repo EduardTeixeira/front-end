@@ -1,8 +1,8 @@
 function onInit() {
 
     $.ajax({
-        url: "http://localhost:8080/v1/product/list",
-        //url: "http://challenge-api.luizalabs.com/api/product/?page=1",
+        //url: "http://localhost:8080/v1/product/list",
+        url: "http://challenge-api.luizalabs.com/api/product/?page=1",
         type: "GET",
         dataType: "JSON",
         headers: {
@@ -15,7 +15,6 @@ function onInit() {
             console.log(data)
 
             for (i = 0; i < data.length; i++) {
-                console.log(data[i])
                 document.getElementById("myTable").innerHTML += `
                 <tr>
                     <td>` + data[i].title + `</td>
