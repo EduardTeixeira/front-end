@@ -1,35 +1,76 @@
 function onInit() {
 
-    $.ajax({
-        //url: "http://localhost:8080/v1/product/list",
+    var request = $.ajax({
+        type: 'GET',
+        //data: "text=" + $(this).val(),
         url: "http://challenge-api.luizalabs.com/api/product/?page=1",
-        type: "GET",
-        dataType: "JSON",
-        headers: {
-            'Content-Type': 'application/json',
-            'charset': 'utf-8',
-        },
         success: function (data) {
-
-            console.log('data...')
-            console.log(data)
-
-            for (i = 0; i < data.length; i++) {
-                document.getElementById("myTable").innerHTML += `
-                <tr>
-                    <td>` + data[i].title + `</td>
-                    <td>` + data[i].price + `</td>
-                    <td>
-                        <img src="` + data[i].image + `">
-                    </td>
-                </tr>`;
-            }
+            console.log("OK")
+            console.log(data);
         },
-        error: function (error) {
+        error: function (jqXHR, textStatus, errorThrown) {
             console.log("ERROR")
-            console.log(error);
+            console.log(jqXHR, textStatus, errorThrown);
+            request.abort();
         }
     });
+
+    /*
+    $.getJSON("http://challenge-api.luizalabs.com/api/product/?page=1",
+        function (data) {
+            console.log(data)
+            doSomethingWith(data);
+        });
+        **/
+
+
+    /*
+var xhttp = new XMLHttpRequest();
+
+xhttp.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+        console.log("OK DEU CERTO @@@")
+        //document.getElementById("demo").innerHTML = this.responseText;
+        console.log(this.responseText);
+
+        $.ajax({
+            //url: "http://localhost:8080/v1/product/list",
+            url: "http://challenge-api.luizalabs.com/api/product/?page=1",
+            method: "GET",
+            dataType: "JSON",
+            headers: {
+                'Content-Type': 'application/json',
+                'charset': 'utf-8',
+            },
+            success: function (data) {
+
+                console.log('data...')
+                console.log(data)
+
+                for (i = 0; i < data.length; i++) {
+                    document.getElementById("myTable").innerHTML += `
+                    <tr>
+                        <td>` + data[i].title + `</td>
+                        <td>` + data[i].price + `</td>
+                        <td>
+                            <img src="` + data[i].image + `">
+                        </td>
+                    </tr>`;
+                }
+            },
+            error: function (error) {
+                console.log("ERROR")
+                console.log(error);
+            }
+        });
+
+    } else{
+        console.log("DEU ERRO.")
+    }
+};
+xhttp.open("GET", "http://challenge-api.luizalabs.com/api/product/?page=1", true);
+xhttp.send();
+*/
 }
 
 function sortTable(n) {
