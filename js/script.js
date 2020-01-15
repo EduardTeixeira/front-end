@@ -9,7 +9,7 @@ function onInit() {
             console.log(data);
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            console.log("ERROR")
+            console.log("ERROR2222")
             console.log(jqXHR, textStatus, errorThrown);
             request.abort();
         }
