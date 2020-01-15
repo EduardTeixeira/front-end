@@ -1,3 +1,38 @@
+function onInit() {
+
+    $.ajax({
+        url: "http://localhost:8080/v1/product/list",
+        //url: "http://challenge-api.luizalabs.com/api/product/?page=1",
+        type: "GET",
+        dataType: "JSON",
+        headers: {
+            'Content-Type': 'application/json',
+            'charset': 'utf-8',
+        },
+        success: function (data) {
+
+            console.log('data...')
+            console.log(data)
+
+            for (i = 0; i < data.length; i++) {
+                console.log(data[i])
+                document.getElementById("myTable").innerHTML += `
+                <tr>
+                    <td>` + data[i].title + `</td>
+                    <td>` + data[i].price + `</td>
+                    <td>
+                        <img src="` + data[i].image + `">
+                    </td>
+                </tr>`;
+            }
+        },
+        error: function (error) {
+            console.log("ERROR")
+            console.log(error);
+        }
+    });
+}
+
 function sortTable(n) {
     var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
     table = document.getElementById("myTable");
@@ -23,6 +58,46 @@ function sortTable(n) {
                 }
             }
         }
+        if (shouldSwitch) {
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+            switchcount++;
+        } else {
+            if (switchcount == 0 && dir == "asc") {
+                dir = "desc";
+                switching = true;
+            }
+        }
+    }
+}
+
+function sortTablePrice(n) {
+    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+    table = document.getElementById("myTable");
+    switching = true;
+    dir = "asc";
+
+    while (switching) {
+        switching = false;
+        rows = table.rows;
+        for (i = 1; i < (rows.length - 1); i++) {
+            shouldSwitch = false;
+            x = rows[i].getElementsByTagName("TD")[n];
+            y = rows[i + 1].getElementsByTagName("TD")[n];
+
+            if (dir == "asc") {
+                if (Number(x.innerHTML) > Number(y.innerHTML)) {
+                    shouldSwitch = true;
+                    break;
+                }
+            } else if (dir == "desc") {
+                if (Number(x.innerHTML) < Number(y.innerHTML)) {
+                    shouldSwitch = true;
+                    break;
+                }
+            }
+        }
+
         if (shouldSwitch) {
             rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
             switching = true;
