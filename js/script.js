@@ -16,16 +16,42 @@ function onInit() {
 
             var listProducts = data.products;
 
+            var listBrands = [];
+
+            console.log("LISTA DE PRODUTOS....");
+            console.log(listProducts);
+
             for (i = 0; i < listProducts.length; i++) {
+
                 document.getElementById("myTable").innerHTML += `
                 <tr>
                     <td>` + listProducts[i].title + `</td>
                     <td>` + listProducts[i].price + `</td>
+                    <td>` + listProducts[i].brand + `</td>
                     <td>
                         <img src="` + listProducts[i].image + `">
                     </td>
                 </tr>`;
+
+                listBrands.push(listProducts[i].brand);
             }
+
+            for (i = 0; i < listBrands.length; i++) {
+
+                for (j = 0; j < listBrands.length; j++) {
+
+                    if (listBrands[i] == listBrands[j]) {
+                        console.log(i + " ..... " + j);
+                        //console.log("ITEM i... " + i + "... j..." + j + " listBrands[i] + listBrands[j]");
+                        //listBrands = listBrands.splice(j, 0);
+                        listBrands.splice(j, 1);
+                    }
+
+                }
+            }
+
+            console.log("MARCAS....");
+            console.log(listBrands)
         },
         error: function (error) {
             console.log("ERROR");
