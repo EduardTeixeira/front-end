@@ -1,4 +1,4 @@
-function onLoad() {
+function onInit() {
 
     document.getElementById("content").style.display = "none";
 
@@ -34,39 +34,12 @@ function onLoad() {
                 </div>
                 </div>`;
 
-                /*
-                                <div class="gallery">
-                    <a target="_blank" href="` + listProducts[i].image + `">
-                        <img src="` + listProducts[i].image + `" alt="Alt..." width="600" height="400">
-                    </a>
-                    <div class="desc">` + listProducts[i].title + `</div>
-                    <div class="desc">` + listProducts[i].price + `</div>
-                    <div class="desc">` + listProducts[i].brand + `</div>
-                </div>
-                */
-
-
-
-                /*
-                <tr>
-                    <td>` + listProducts[i].title + `</td>
-                    <td>` + listProducts[i].price + `</td>
-                    <td>` + listProducts[i].brand + `</td>
-                    <td>
-                        <img src="` + listProducts[i].image + `" class="imgSize">
-                    </td>
-                </tr>
-                */
-
                 listBrands.push(listProducts[i].brand);
             }
-
 
             $.each(listBrands, function (i, el) {
                 if ($.inArray(el, uniqueBrands) === -1) uniqueBrands.push(el);
             });
-
-            console.log("MARCAS.... 31 diferentes ... TEM ::: " + uniqueBrands.length);
 
             uniqueBrands.sort();
             for (i = 0; i < uniqueBrands.length; i++) {
@@ -84,88 +57,10 @@ function onLoad() {
 
             console.log(error);
 
-            document.getElementById("myTable").innerHTML += `
-            <tr>
-                <td>Erro ao buscar produtos, recarregue a página e tente novamente.</td>
-                <td></td>
-                <td></td>
-            </tr>`;
-        },
-        complete: function () {
-
-            document.getElementById("content").style.display = "block";
-
-            document.getElementById("loading").style.display = "none";
-        }
-    });
-}
-
-function onInit() {
-
-    document.getElementById("content").style.display = "none";
-
-    $.ajax({
-        //url: "http://localhost:8080/v1/product/list",
-        url: "https://cors-anywhere.herokuapp.com/http://challenge-api.luizalabs.com/api/product/?page=1",
-        method: "GET",
-        dataType: "JSON",
-        useDefaultXhrHeader: false,
-        headers: {
-            'Content-Type': 'application/json',
-            'charset': 'utf-8',
-        },
-        success: function (data) {
-
-            var listProducts = data.products;
-
-            var listBrands = [];
-
-            var uniqueBrands = [];
-
-            for (i = 0; i < listProducts.length; i++) {
-
-                document.getElementById("myTable").innerHTML += `
-                <tr>
-                    <td>` + listProducts[i].title + `</td>
-                    <td>` + listProducts[i].price + `</td>
-                    <td>` + listProducts[i].brand + `</td>
-                    <td>
-                        <img src="` + listProducts[i].image + `" class="imgSize">
-                    </td>
-                </tr>`;
-
-                listBrands.push(listProducts[i].brand);
-            }
-
-
-            $.each(listBrands, function (i, el) {
-                if ($.inArray(el, uniqueBrands) === -1) uniqueBrands.push(el);
-            });
-
-            console.log("MARCAS.... 31 diferentes ... TEM ::: " + uniqueBrands.length);
-
-            uniqueBrands.sort();
-            for (i = 0; i < uniqueBrands.length; i++) {
-                document.getElementById("brands").innerHTML += `
-                <li>
-                    <input type="checkbox" value="` + uniqueBrands[i] + `"> 
-                    ` + uniqueBrands[i] + `
-                </li>`;
-            }
-
-        },
-        error: function (error) {
-
-            console.log("ERROR");
-
-            console.log(error);
-
-            document.getElementById("myTable").innerHTML += `
-            <tr>
-                <td>Erro ao buscar produtos, recarregue a página e tente novamente.</td>
-                <td></td>
-                <td></td>
-            </tr>`;
+            document.getElementById("listProducts").innerHTML += `
+                <div>
+                    <h4>Erro ao buscar produtos, recarregue a página e tente novamente.</h4>
+                </div>`;
         },
         complete: function () {
 

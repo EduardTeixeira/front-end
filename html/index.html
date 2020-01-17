@@ -3,13 +3,14 @@
 
 <head>
     <title>Lista de Produtos</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../css/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="../js/script.js"></script>
 </head>
 
-<body onload="onLoad()">
+<body onload="onInit()">
 
     <div id="loading" class="center">
         <div class="loader">
@@ -32,7 +33,7 @@
             </ul>
         </div>
 
-        <ul id="listProducts">
+        <ul id="listProducts" style="margin-left:20%">
         </ul>
 
     </div>
