@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Lista de Produtos GH-Pages</title>
+    <title>Lista de Produtos</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../css/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -21,14 +21,18 @@
 
         <h1>Lista de Produtos</h1>
 
-        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Pesquisar por nome...">
+        <input type="text" id="myInput" onkeyup="searchForName()" placeholder="Pesquisar por nome...">
+
+        <ul id="brands" style="list-style-type:none;">
+            <h4>Marcas</h4>
+        </ul>
 
         <table id="myTable">
             <tr>
-                <th onclick="sortTable(0)">Nome</th>
-                <th onclick="sortTablePrice(1)">Preço</th>
-                <th onclick="sortTable(2)">Marca</th>
-                <th onclick="sortTable(3)">Imagem</th>
+                <th onclick="sortByString(0)">Nome</th>
+                <th onclick="sortByPrice(1)">Preço</th>
+                <th onclick="sortByString(2)">Marca</th>
+                <th>Imagem</th>
             </tr>
         </table>
 
