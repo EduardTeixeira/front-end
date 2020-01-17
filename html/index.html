@@ -22,10 +22,17 @@
 
         <h1>Lista de Produtos</h1>
 
-        <!--
-            onkeyup="searchForName()"
-        -->
         <input type="text" id="myInput" placeholder="Pesquisar por nome...">
+
+        <div id="filter">
+            <select id="mySort" onchange="changeSort()">
+                <option value="null">Selecione um filtro...</option>
+                <option value="lowPrice">Menor Preço</option>
+                <option value="bigPrice">Maior Preço</option>
+                <option value="orderAZ">Ordenar por nome A-Z</option>
+                <option value="orderZA">Ordenar por nome Z-A</option>
+            </select>
+        </div>
 
         <div style="float: left; width: 20%;">
             <ul id="brands" style="list-style-type:none;">

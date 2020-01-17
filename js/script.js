@@ -24,14 +24,14 @@ function onInit() {
 
                 document.getElementById("listProducts").innerHTML += `
                 <div class="responsive">
-                <div class="gallery">
-                    <a target="_blank" href="` + listProducts[i].image + `">
-                        <img src="` + listProducts[i].image + `" alt="Northern Lights" width="600" height="400">
-                    </a>
-                    <div class="desc">` + listProducts[i].title + `</div>
-                    <div class="desc">` + listProducts[i].price + `</div>
-                    <div class="desc">` + listProducts[i].brand + `</div>
-                </div>
+                    <div class="gallery">
+                        <a target="_blank" href="` + listProducts[i].image + `">
+                            <img src="` + listProducts[i].image + `" alt="Northern Lights" width="600" height="400">
+                        </a>
+                        <div class="desc">` + listProducts[i].title + `</div>
+                        <div class="desc">` + listProducts[i].price + `</div>
+                        <div class="desc">` + listProducts[i].brand + `</div>
+                    </div>
                 </div>`;
 
                 listBrands.push(listProducts[i].brand);
@@ -72,18 +72,23 @@ function onInit() {
 }
 
 $(document).ready(function () {
-
-    var r = $("#listProducts div div");
-    console.log("RESULT")
-    console.log(r);
-
     $("#myInput").on("keyup", function () {
         var value = $(this).val().toLowerCase();
-        $("#listProducts div div").filter(function () {
+        $("#listProducts div.responsive").filter(function () {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
     });
 });
+
+function changeSort() {
+
+    var select = document.getElementById("mySort").value;
+
+    if (select != "null") {
+        //chama codigo do filtro...
+    }
+}
+
 
 function sortByString(n) {
 
