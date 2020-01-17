@@ -29,7 +29,7 @@ function onInit() {
                     <td>` + listProducts[i].price + `</td>
                     <td>` + listProducts[i].brand + `</td>
                     <td>
-                        <img src="` + listProducts[i].image + `">
+                        <img src="` + listProducts[i].image + `" class="imgSize">
                     </td>
                 </tr>`;
 

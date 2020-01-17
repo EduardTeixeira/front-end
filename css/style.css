@@ -92,3 +92,8 @@ tr:nth-child(even) {
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 }
+
+.imgSize {
+  widows: 100px;
+  height: 100px;
+}
