@@ -43,6 +43,7 @@ function onInit() {
             console.log("MARCAS.... 31 diferentes ... TEM ::: " + uniqueBrands.length);
 
             uniqueBrands.sort();
+            /*
             for (i = 0; i < uniqueBrands.length; i++) {
                 document.getElementById("brands").innerHTML += `
                 <li>
@@ -50,6 +51,7 @@ function onInit() {
                     ` + uniqueBrands[i] + `
                 </li>`;
             }
+            */
 
         },
         error: function (error) {
