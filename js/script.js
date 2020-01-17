@@ -71,6 +71,20 @@ function onInit() {
     });
 }
 
+$(document).ready(function () {
+
+    var r = $("#listProducts div div");
+    console.log("RESULT")
+    console.log(r);
+
+    $("#myInput").on("keyup", function () {
+        var value = $(this).val().toLowerCase();
+        $("#listProducts div div").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+});
+
 function sortByString(n) {
 
     var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
@@ -215,6 +229,7 @@ function sortByPrice(n) {
 
 }
 
+/*
 function searchForName() {
 
     var input, filter, table, tr, td, i, txtValue;
@@ -250,3 +265,4 @@ function searchForName() {
     }
 
 }
+*/
