@@ -9,7 +9,7 @@
     <script src="../js/script.js"></script>
 </head>
 
-<body onload="onInit()">
+<body onload="onLoad()">
 
     <div id="loading" class="center">
         <div class="loader">
@@ -23,29 +23,17 @@
 
         <input type="text" id="myInput" onkeyup="searchForName()" placeholder="Pesquisar por nome...">
 
-        <div style="float: left;">
+        <!--
+            
+        -->
+        <div style="float: left; width: 20%;">
             <ul id="brands" style="list-style-type:none;">
                 <h4>Marcas</h4>
             </ul>
         </div>
 
-        <div>
-            <div class="gallery">
-                <a target="_blank" href="../img/searchicon.png">
-                    <img src="../img/searchicon.png" alt="Alt..." width="600" height="400">
-                </a>
-                <div class="desc">Add a description of the image here</div>
-            </div>
-        </div>
-
-        <table id="myTable">
-            <tr>
-                <th onclick="sortByString(0)">Nome</th>
-                <th onclick="sortByPrice(1)">Preço</th>
-                <th onclick="sortByString(2)">Marca</th>
-                <th>Imagem</th>
-            </tr>
-        </table>
+        <ul id="listProducts">
+        </ul>
 
     </div>
 

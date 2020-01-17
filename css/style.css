@@ -20,7 +20,8 @@
   font-size: 18px;
 }
 
-#myTable th, #myTable td {
+#myTable th,
+#myTable td {
   text-align: left;
   padding: 12px;
 }
@@ -29,7 +30,8 @@
   border-bottom: 1px solid #ddd;
 }
 
-#myTable tr.header, #myTable tr:hover {
+#myTable tr.header,
+#myTable tr:hover {
   background-color: #f1f1f1;
 }
 
@@ -44,7 +46,8 @@ th {
   cursor: pointer;
 }
 
-th, td {
+th,
+td {
   text-align: left;
   padding: 16px;
 }
@@ -94,15 +97,12 @@ tr:nth-child(even) {
 }
 
 .imgSize {
-  widows: 100px;
-  height: 100px;
+  width: 145px;
+  height: 145px;
 }
 
 div.gallery {
-  margin: 5px;
   border: 1px solid #ccc;
-  float: left;
-  width: 180px;
 }
 
 div.gallery:hover {
@@ -110,11 +110,41 @@ div.gallery:hover {
 }
 
 div.gallery img {
-  width: 100%;
-  height: auto;
+  width: 145px;
+  height: 145px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 div.desc {
-  padding: 15px;
-  text-align: center;
+  padding: 5px;
+}
+
+.responsive {
+  padding: 0 6px;
+  float: left;
+  width: 24.99999%;
+  /*height: 24.99999%;*/
+}
+
+@media only screen and (max-width: 700px) {
+  .responsive {
+    width: 49.99999%;
+    /*height: 49.99999%;*/
+    margin: 6px 0;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .responsive {
+    width: 100%;
+    /*height: 100%;*/
+  }
+}
+
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
 }
