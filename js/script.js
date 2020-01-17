@@ -85,7 +85,7 @@ function changeSort() {
     var select = document.getElementById("mySort").value;
 
     if (select != "null") {
-        //chama codigo do filtro...
+        //chama codigo do filtro....
     }
 }
 
