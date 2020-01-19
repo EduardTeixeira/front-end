@@ -1,19 +1,23 @@
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body {
+    font: small-caption;
 }
 
 #myInput {
-  background-image: url("../img/searchicon.png");
-  background-position: 10px 10px;
-  background-repeat: no-repeat;
-  width: 100%;
-  font-size: 16px;
-  padding: 12px 20px 12px 40px;
-  border: 1px solid #ddd;
-  margin-bottom: 12px;
+    background-image: url("../img/searchicon.png");
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+    width: 100%;
+    font-size: 16px;
+    padding: 12px 20px 12px 40px;
+    border: 1px solid #ddd;
+    margin-bottom: 12px;
 }
 
-select{
+select {
     background-position: 10px 10px;
     background-repeat: no-repeat;
     width: 100%;
@@ -24,85 +28,85 @@ select{
 }
 
 .loader {
-  border: 16px solid #f3f3f3;
-  border-radius: 50%;
-  border-top: 16px solid #3498db;
-  width: 120px;
-  height: 120px;
-  -webkit-animation: spin 2s linear infinite;
-  animation: spin 2s linear infinite;
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #3498db;
+    width: 120px;
+    height: 120px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
 }
 
 @-webkit-keyframes spin {
-  0% {
-    -webkit-transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-  }
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
 }
 
 @keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 .center {
-  margin: 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
 }
 
 .imgSize {
-  width: 145px;
-  height: 145px;
+    width: 145px;
+    height: 145px;
 }
 
 div.gallery {
-  border: 1px solid #ccc;
+    border: 1px solid #beb1ea;
 }
 
 div.gallery:hover {
-  border: 1px solid #777;
+    border: 1px solid #0001ff;
 }
 
 div.gallery img {
-  width: 145px;
-  height: 145px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+    width: 145px;
+    height: 145px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 div.desc {
-  padding: 5px;
-  font-size: 16px;
-  line-height: 20px;
-  height: 60px;
+    padding: 5px;
+    font-size: 16px;
+    line-height: 20px;
+    height: 60px;
 }
 
 .responsive {
-  padding: 0 6px;
-  float: left;
-  width: 25%;
+    padding: 0 6px;
+    float: left;
+    width: 25%;
 }
 
 @media only screen and (max-width: 850px) {
-  .responsive {
-    width: 50%;
-    margin: 6px 0;
-  }
+    .responsive {
+        width: 50%;
+        margin: 6px 0;
+    }
 }
 
 @media only screen and (max-width: 500px) {
-  .responsive {
-    width: 100%;
-  }
+    .responsive {
+        width: 100%;
+    }
 }
