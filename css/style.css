@@ -98,6 +98,15 @@ div.desc {
     width: 25%;
 }
 
+.divBrands {
+    float: left;
+    width: 20%;
+}
+
+#listProducts {
+    margin-left: 20%
+}
+
 @media only screen and (max-width: 900px) {
     .responsive {
         width: 33%;
@@ -111,8 +120,14 @@ div.desc {
     }
 }
 
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 650px) {
     .responsive {
         width: 100%;
+    }
+    .divBrands {
+        width: 100%;
+    }
+    #listProducts {
+        margin-left: 0%;
     }
 }
