@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Lista de Produtos</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="../js/script.js"></script>
+</head>
+
+<body onload="onInit()">
+
+    <div id="loading" class="center">
+        <div class="loader">
+        </div>
+        <h2>Carregando...</h2>
+    </div>
+
+    <div id="content">
+
+        <h1>Lista de Produtos</h1>
+
+        <input type="text" id="myInput" placeholder="Pesquisar por nome...">
+
+        <div id="filter">
+            <select id="mySort" onchange="changeSort()">
+                <option value="null">Selecione um filtro...</option>
+                <option value="lowPrice">Menor Preço</option>
+                <option value="bigPrice">Maior Preço</option>
+                <option value="orderAZ">Ordenar por nome A-Z</option>
+                <option value="orderZA">Ordenar por nome Z-A</option>
+            </select>
+        </div>
+
+        <div style="float: left; width: 20%;">
+            <ul id="brands" style="list-style-type:none;" onclick="brandFilter(event.target)">
+                <h4>Marcas</h4>
+            </ul>
+        </div>
+
+        <div id="listProducts" style="margin-left:20%">
+        </div>
+
+    </div>
+
+</body>
+
+</html>

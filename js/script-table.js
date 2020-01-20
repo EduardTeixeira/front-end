@@ -1,49 +1,6 @@
-var listProducts = [];
-
-var listBrands = [];
-
-var uniqueBrands = [];
-
-var brandsSelected = [];
-
-function hideContent() {
-    document.getElementById("content").style.display = "none";
-    document.getElementById("loading").style.display = "block";
-}
-
-function showContent() {
-    document.getElementById("content").style.display = "block";
-    document.getElementById("loading").style.display = "none";
-}
-
-$(document).ready(function () {
-    $("#myInput").on("keyup", function () {
-        var value = $(this).val().toLowerCase();
-        $("#listProducts div.responsive").filter(function () {
-            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-        });
-    });
-});
-
-function innerHtmlListProducts(element) {
-    document.getElementById("listProducts").innerHTML += `
-        <div class="responsive">
-            <div class="gallery">
-                <a target="_blank" href="` + element.image + `">
-                    <img src="` + element.image + `" alt="` + element.title + `" width="600" height="400">
-                </a>
-                <div class="desc" name="` + element.title + `">` + element.title + `</div>
-                <div class="desc">
-                    <span>R$ </span>
-                ` + element.price + `
-                </div>
-            </div>
-        </div>`;
-}
-
 function onInit() {
 
-    hideContent();
+    document.getElementById("content").style.display = "none";
 
     $.ajax({
         //url: "http://localhost:8080/v1/product/list",
@@ -57,31 +14,33 @@ function onInit() {
         },
         success: function (data) {
 
-            listProducts = data.products;
+            var listProducts = data.products;
+
+            var listBrands = [];
+
+            var uniqueBrands = [];
 
             for (i = 0; i < listProducts.length; i++) {
 
-                listProducts[i].visible = false;
-
-                innerHtmlListProducts(listProducts[i]);
+                document.getElementById("myTable").innerHTML += `
+                <tr>
+                    <td>` + listProducts[i].title + `</td>
+                    <td>` + listProducts[i].price + `</td>
+                    <td>` + listProducts[i].brand + `</td>
+                    <td>
+                        <img src="` + listProducts[i].image + `" class="imgSize">
+                    </td>
+                </tr>`;
 
                 listBrands.push(listProducts[i].brand);
             }
+
 
             $.each(listBrands, function (i, el) {
                 if ($.inArray(el, uniqueBrands) === -1) uniqueBrands.push(el);
             });
 
             uniqueBrands.sort();
-            /*
-            for (i = 0; i < uniqueBrands.length; i++) {
-                document.getElementById("brands").innerHTML += `
-                    <li>
-                        <input type="checkbox" value="` + uniqueBrands[i] + `"> 
-                        ` + uniqueBrands[i] + `
-                    </li>`;
-            }
-            */
 
         },
         error: function (error) {
@@ -90,197 +49,85 @@ function onInit() {
 
             console.log(error);
 
-            document.getElementById("listProducts").innerHTML += `
-                <div>
-                    <h4>Erro ao buscar produtos, recarregue a página e tente novamente.</h4>
-                </div>`;
+            document.getElementById("myTable").innerHTML += `
+            <tr>
+                <td>Erro ao buscar produtos, recarregue a página e tente novamente.</td>
+                <td></td>
+                <td></td>
+            </tr>`;
         },
         complete: function () {
 
-            showContent();
+            document.getElementById("content").style.display = "block";
+
+            document.getElementById("loading").style.display = "none";
         }
     });
 }
 
-function changeSort() {
+function sortByString(n) {
 
-    var select = document.getElementById("mySort").value;
+    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
 
-    if (select != "null") {
+    table = document.getElementById("myTable");
 
-        document.getElementById("listProducts").innerHTML = ``;
+    switching = true;
 
-        if (select == 'lowPrice') {
-            lowPrice();
-        }
+    dir = "asc";
 
-        if (select == 'bigPrice') {
-            bigPrice();
-        }
+    while (switching) {
 
-        if (select == 'orderAZ') {
-            orderAZ();
-        }
+        switching = false;
 
-        if (select == 'orderZA') {
-            orderZA();
-        }
+        rows = table.rows;
 
-    }
+        for (i = 1; i < (rows.length - 1); i++) {
 
-}
+            shouldSwitch = false;
 
-function lowPrice() {
+            x = rows[i].getElementsByTagName("td")[n];
 
-    hideContent();
+            y = rows[i + 1].getElementsByTagName("td")[n];
 
-    listProducts.sort(function (a, b) {
-        return a.price - b.price
-    });
+            if (dir == "asc") {
 
-    if (brandsSelected.length > 0) {
+                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
 
-        for (i = 0; i < listProducts.length; i++) {
+                    shouldSwitch = true;
 
-            if (listProducts[i].visible == true) {
+                    break;
 
-                innerHtmlListProducts(listProducts[i]);
+                }
+
+            } else if (dir == "desc") {
+
+                if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+
+                    shouldSwitch = true;
+
+                    break;
+
+                }
 
             }
 
         }
 
-    } else {
+        if (shouldSwitch) {
 
-        for (i = 0; i < listProducts.length; i++) {
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
 
-            innerHtmlListProducts(listProducts[i]);
+            switching = true;
 
-        }
+            switchcount++;
 
-    }
+        } else {
 
-    showContent();
-}
+            if (switchcount == 0 && dir == "asc") {
 
-function bigPrice() {
+                dir = "desc";
 
-    hideContent();
-
-    listProducts.sort(function (a, b) {
-        return b.price - a.price
-    });
-
-    if (brandsSelected.length > 0) {
-
-        for (i = 0; i < listProducts.length; i++) {
-
-            if (listProducts[i].visible == true) {
-
-                innerHtmlListProducts(listProducts[i]);
-
-            }
-
-        }
-
-    } else {
-
-        for (i = 0; i < listProducts.length; i++) {
-
-            innerHtmlListProducts(listProducts[i]);
-
-        }
-
-    }
-
-    showContent();
-}
-
-function orderAZ() {
-
-    hideContent();
-
-    listProducts.sort(function (a, b) {
-        return a.title < b.title ? -1 : a.title > b.title ? 1 : 0;
-    });
-
-    if (brandsSelected.length > 0) {
-
-        for (i = 0; i < listProducts.length; i++) {
-
-            if (listProducts[i].visible == true) {
-
-                innerHtmlListProducts(listProducts[i]);
-
-            }
-
-        }
-
-    } else {
-
-        for (i = 0; i < listProducts.length; i++) {
-
-            innerHtmlListProducts(listProducts[i]);
-
-        }
-
-    }
-
-    showContent();
-}
-
-function orderZA() {
-
-    hideContent();
-
-    listProducts.sort(function (a, b) {
-        return a.title < b.title ? -1 : a.title > b.title ? 1 : 0;
-    });
-
-    listProducts.reverse(function (a, b) {
-        return a.title < b.title ? -1 : a.title > b.title ? 1 : 0;
-    });
-
-    if (brandsSelected.length > 0) {
-
-        for (i = 0; i < listProducts.length; i++) {
-
-            if (listProducts[i].visible == true) {
-
-                innerHtmlListProducts(listProducts[i]);
-
-            }
-
-        }
-
-    } else {
-
-        for (i = 0; i < listProducts.length; i++) {
-
-            innerHtmlListProducts(listProducts[i]);
-
-        }
-
-    }
-
-    showContent();
-}
-
-function brandFilter(element) {
-
-    hideContent();
-
-    if (element.checked == true) {
-
-        brandsSelected.push(element.value);
-
-    } else if (element.checked == false) {
-
-        for (i = 0; i < brandsSelected.length; i++) {
-
-            if (brandsSelected[i] == element.value) {
-
-                brandsSelected.splice(i, 1);
+                switching = true;
 
             }
 
@@ -288,44 +135,109 @@ function brandFilter(element) {
 
     }
 
-    document.getElementById("listProducts").innerHTML = ``;
+}
 
-    brandVisible(element.value, element.checked);
+function sortByPrice(n) {
 
-    if (brandsSelected.length > 0) {
+    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
 
-        for (i = 0; i < listProducts.length; i++) {
+    table = document.getElementById("myTable");
 
-            if (listProducts[i].visible == true) {
+    switching = true;
 
-                innerHtmlListProducts(listProducts[i]);
+    dir = "asc";
+
+    while (switching) {
+
+        switching = false;
+
+        rows = table.rows;
+
+        for (i = 1; i < (rows.length - 1); i++) {
+
+            shouldSwitch = false;
+
+            x = rows[i].getElementsByTagName("TD")[n];
+
+            y = rows[i + 1].getElementsByTagName("TD")[n];
+
+            if (dir == "asc") {
+
+                if (Number(x.innerHTML) > Number(y.innerHTML)) {
+
+                    shouldSwitch = true;
+
+                    break;
+
+                }
+
+            } else if (dir == "desc") {
+
+                if (Number(x.innerHTML) < Number(y.innerHTML)) {
+
+                    shouldSwitch = true;
+
+                    break;
+
+                }
 
             }
 
         }
 
-    } else {
+        if (shouldSwitch) {
 
-        for (i = 0; i < listProducts.length; i++) {
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
 
-            listProducts[i].visible == false;
+            switching = true;
 
-            innerHtmlListProducts(listProducts[i]);
+            switchcount++;
+
+        } else {
+
+            if (switchcount == 0 && dir == "asc") {
+
+                dir = "desc";
+
+                switching = true;
+
+            }
 
         }
 
     }
 
-    showContent();
 }
 
-function brandVisible(brand, checked) {
+function searchForName() {
 
-    for (i = 0; i < listProducts.length; i++) {
+    var input, filter, table, tr, td, i, txtValue;
 
-        if (listProducts[i].brand == brand) {
+    input = document.getElementById("myInput");
 
-            listProducts[i].visible = checked;
+    filter = input.value.toUpperCase();
+
+    table = document.getElementById("myTable");
+
+    tr = table.getElementsByTagName("tr");
+
+    for (i = 0; i < tr.length; i++) {
+
+        td = tr[i].getElementsByTagName("td")[0];
+
+        if (td) {
+
+            txtValue = td.textContent || td.innerText;
+
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+
+                tr[i].style.display = "";
+
+            } else {
+
+                tr[i].style.display = "none";
+
+            }
 
         }
 
