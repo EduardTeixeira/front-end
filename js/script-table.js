@@ -1,6 +1,49 @@
+var listProducts = [];
+
+var listBrands = [];
+
+var uniqueBrands = [];
+
+var brandsSelected = [];
+
+function hideContent() {
+    document.getElementById("content").style.display = "none";
+    document.getElementById("loading").style.display = "block";
+}
+
+function showContent() {
+    document.getElementById("content").style.display = "block";
+    document.getElementById("loading").style.display = "none";
+}
+
+$(document).ready(function () {
+    $("#myInput").on("keyup", function () {
+        var value = $(this).val().toLowerCase();
+        $("#listProducts div.responsive").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+});
+
+function innerHtmlListProducts(element) {
+    document.getElementById("listProducts").innerHTML += `
+        <div class="responsive">
+            <div class="gallery">
+                <a target="_blank" href="` + element.image + `">
+                    <img src="` + element.image + `" alt="` + element.title + `" width="600" height="400">
+                </a>
+                <div class="desc" name="` + element.title + `">` + element.title + `</div>
+                <div class="desc">
+                    <span>R$ </span>
+                ` + element.price + `
+                </div>
+            </div>
+        </div>`;
+}
+
 function onInit() {
 
-    document.getElementById("content").style.display = "none";
+    hideContent();
 
     $.ajax({
         //url: "http://localhost:8080/v1/product/list",
@@ -14,42 +57,29 @@ function onInit() {
         },
         success: function (data) {
 
-            var listProducts = data.products;
-
-            var listBrands = [];
-
-            var uniqueBrands = [];
+            listProducts = data.products;
 
             for (i = 0; i < listProducts.length; i++) {
 
-                document.getElementById("myTable").innerHTML += `
-                <tr>
-                    <td>` + listProducts[i].title + `</td>
-                    <td>` + listProducts[i].price + `</td>
-                    <td>` + listProducts[i].brand + `</td>
-                    <td>
-                        <img src="` + listProducts[i].image + `" class="imgSize">
-                    </td>
-                </tr>`;
+                listProducts[i].visible = false;
+
+                innerHtmlListProducts(listProducts[i]);
 
                 listBrands.push(listProducts[i].brand);
             }
-
 
             $.each(listBrands, function (i, el) {
                 if ($.inArray(el, uniqueBrands) === -1) uniqueBrands.push(el);
             });
 
-            console.log("MARCAS.... 31 diferentes ... TEM ::: " + uniqueBrands.length);
-
             uniqueBrands.sort();
             /*
             for (i = 0; i < uniqueBrands.length; i++) {
                 document.getElementById("brands").innerHTML += `
-                <li>
-                    <input type="checkbox" value="` + uniqueBrands[i] + `"> 
-                    ` + uniqueBrands[i] + `
-                </li>`;
+                    <li>
+                        <input type="checkbox" value="` + uniqueBrands[i] + `"> 
+                        ` + uniqueBrands[i] + `
+                    </li>`;
             }
             */
 
@@ -60,85 +90,197 @@ function onInit() {
 
             console.log(error);
 
-            document.getElementById("myTable").innerHTML += `
-            <tr>
-                <td>Erro ao buscar produtos, recarregue a página e tente novamente.</td>
-                <td></td>
-                <td></td>
-            </tr>`;
+            document.getElementById("listProducts").innerHTML += `
+                <div>
+                    <h4>Erro ao buscar produtos, recarregue a página e tente novamente.</h4>
+                </div>`;
         },
         complete: function () {
 
-            document.getElementById("content").style.display = "block";
-
-            document.getElementById("loading").style.display = "none";
+            showContent();
         }
     });
 }
 
-function sortByString(n) {
+function changeSort() {
 
-    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+    var select = document.getElementById("mySort").value;
 
-    table = document.getElementById("myTable");
+    if (select != "null") {
 
-    switching = true;
+        document.getElementById("listProducts").innerHTML = ``;
 
-    dir = "asc";
+        if (select == 'lowPrice') {
+            lowPrice();
+        }
 
-    while (switching) {
+        if (select == 'bigPrice') {
+            bigPrice();
+        }
 
-        switching = false;
+        if (select == 'orderAZ') {
+            orderAZ();
+        }
 
-        rows = table.rows;
+        if (select == 'orderZA') {
+            orderZA();
+        }
 
-        for (i = 1; i < (rows.length - 1); i++) {
+    }
 
-            shouldSwitch = false;
+}
 
-            x = rows[i].getElementsByTagName("td")[n];
+function lowPrice() {
 
-            y = rows[i + 1].getElementsByTagName("td")[n];
+    hideContent();
 
-            if (dir == "asc") {
+    listProducts.sort(function (a, b) {
+        return a.price - b.price
+    });
 
-                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+    if (brandsSelected.length > 0) {
 
-                    shouldSwitch = true;
+        for (i = 0; i < listProducts.length; i++) {
 
-                    break;
+            if (listProducts[i].visible == true) {
 
-                }
-
-            } else if (dir == "desc") {
-
-                if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-
-                    shouldSwitch = true;
-
-                    break;
-
-                }
+                innerHtmlListProducts(listProducts[i]);
 
             }
 
         }
 
-        if (shouldSwitch) {
+    } else {
 
-            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        for (i = 0; i < listProducts.length; i++) {
 
-            switching = true;
+            innerHtmlListProducts(listProducts[i]);
 
-            switchcount++;
+        }
 
-        } else {
+    }
 
-            if (switchcount == 0 && dir == "asc") {
+    showContent();
+}
 
-                dir = "desc";
+function bigPrice() {
 
-                switching = true;
+    hideContent();
+
+    listProducts.sort(function (a, b) {
+        return b.price - a.price
+    });
+
+    if (brandsSelected.length > 0) {
+
+        for (i = 0; i < listProducts.length; i++) {
+
+            if (listProducts[i].visible == true) {
+
+                innerHtmlListProducts(listProducts[i]);
+
+            }
+
+        }
+
+    } else {
+
+        for (i = 0; i < listProducts.length; i++) {
+
+            innerHtmlListProducts(listProducts[i]);
+
+        }
+
+    }
+
+    showContent();
+}
+
+function orderAZ() {
+
+    hideContent();
+
+    listProducts.sort(function (a, b) {
+        return a.title < b.title ? -1 : a.title > b.title ? 1 : 0;
+    });
+
+    if (brandsSelected.length > 0) {
+
+        for (i = 0; i < listProducts.length; i++) {
+
+            if (listProducts[i].visible == true) {
+
+                innerHtmlListProducts(listProducts[i]);
+
+            }
+
+        }
+
+    } else {
+
+        for (i = 0; i < listProducts.length; i++) {
+
+            innerHtmlListProducts(listProducts[i]);
+
+        }
+
+    }
+
+    showContent();
+}
+
+function orderZA() {
+
+    hideContent();
+
+    listProducts.sort(function (a, b) {
+        return a.title < b.title ? -1 : a.title > b.title ? 1 : 0;
+    });
+
+    listProducts.reverse(function (a, b) {
+        return a.title < b.title ? -1 : a.title > b.title ? 1 : 0;
+    });
+
+    if (brandsSelected.length > 0) {
+
+        for (i = 0; i < listProducts.length; i++) {
+
+            if (listProducts[i].visible == true) {
+
+                innerHtmlListProducts(listProducts[i]);
+
+            }
+
+        }
+
+    } else {
+
+        for (i = 0; i < listProducts.length; i++) {
+
+            innerHtmlListProducts(listProducts[i]);
+
+        }
+
+    }
+
+    showContent();
+}
+
+function brandFilter(element) {
+
+    hideContent();
+
+    if (element.checked == true) {
+
+        brandsSelected.push(element.value);
+
+    } else if (element.checked == false) {
+
+        for (i = 0; i < brandsSelected.length; i++) {
+
+            if (brandsSelected[i] == element.value) {
+
+                brandsSelected.splice(i, 1);
 
             }
 
@@ -146,109 +288,44 @@ function sortByString(n) {
 
     }
 
-}
+    document.getElementById("listProducts").innerHTML = ``;
 
-function sortByPrice(n) {
+    brandVisible(element.value, element.checked);
 
-    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+    if (brandsSelected.length > 0) {
 
-    table = document.getElementById("myTable");
+        for (i = 0; i < listProducts.length; i++) {
 
-    switching = true;
+            if (listProducts[i].visible == true) {
 
-    dir = "asc";
-
-    while (switching) {
-
-        switching = false;
-
-        rows = table.rows;
-
-        for (i = 1; i < (rows.length - 1); i++) {
-
-            shouldSwitch = false;
-
-            x = rows[i].getElementsByTagName("TD")[n];
-
-            y = rows[i + 1].getElementsByTagName("TD")[n];
-
-            if (dir == "asc") {
-
-                if (Number(x.innerHTML) > Number(y.innerHTML)) {
-
-                    shouldSwitch = true;
-
-                    break;
-
-                }
-
-            } else if (dir == "desc") {
-
-                if (Number(x.innerHTML) < Number(y.innerHTML)) {
-
-                    shouldSwitch = true;
-
-                    break;
-
-                }
+                innerHtmlListProducts(listProducts[i]);
 
             }
 
         }
 
-        if (shouldSwitch) {
+    } else {
 
-            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        for (i = 0; i < listProducts.length; i++) {
 
-            switching = true;
+            listProducts[i].visible == false;
 
-            switchcount++;
-
-        } else {
-
-            if (switchcount == 0 && dir == "asc") {
-
-                dir = "desc";
-
-                switching = true;
-
-            }
+            innerHtmlListProducts(listProducts[i]);
 
         }
 
     }
 
+    showContent();
 }
 
-function searchForName() {
+function brandVisible(brand, checked) {
 
-    var input, filter, table, tr, td, i, txtValue;
+    for (i = 0; i < listProducts.length; i++) {
 
-    input = document.getElementById("myInput");
+        if (listProducts[i].brand == brand) {
 
-    filter = input.value.toUpperCase();
-
-    table = document.getElementById("myTable");
-
-    tr = table.getElementsByTagName("tr");
-
-    for (i = 0; i < tr.length; i++) {
-
-        td = tr[i].getElementsByTagName("td")[0];
-
-        if (td) {
-
-            txtValue = td.textContent || td.innerText;
-
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-
-                tr[i].style.display = "";
-
-            } else {
-
-                tr[i].style.display = "none";
-
-            }
+            listProducts[i].visible = checked;
 
         }
 
