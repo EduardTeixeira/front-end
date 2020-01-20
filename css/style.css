@@ -88,8 +88,8 @@ div.gallery img {
 div.desc {
     padding: 5px;
     font-size: 16px;
-    line-height: 20px;
-    height: 60px;
+    line-height: 18px;
+    height: 70px;
 }
 
 .responsive {
@@ -98,10 +98,16 @@ div.desc {
     width: 25%;
 }
 
-@media only screen and (max-width: 850px) {
+@media only screen and (max-width: 900px) {
+    .responsive {
+        width: 33%;
+        margin: 6px 0;
+    }
+}
+
+@media only screen and (max-width: 700px) {
     .responsive {
         width: 50%;
-        margin: 6px 0;
     }
 }
 
